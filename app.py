@@ -22,9 +22,13 @@ nltk.download('omw-1.4')
 # Using st.cache_data to cache the data and avoid reloading on every interaction
 @st.cache_data
 def load_data():
-    # Reading the datasets. These files must be in the same directory as the app.py file.
-    fake = pd.read_csv("Fake.csv")
-    true = pd.read_csv("True.csv")
+    # Direct download URLs from Google Drive
+    fake_url = "https://drive.google.com/uc?export=download&id=19PMwfUtx-cvQRoEZmiLaRbIxb3wfmQNc"
+    true_url = "https://drive.google.com/uc?export=download&id=1zOdzPwD2ipm1YRDLlGUO0dykz7deyy6XE"
+    
+    # Reading the datasets from the URLs
+    fake = pd.read_csv(fake_url)
+    true = pd.read_csv(true_url)
     
     # Assigning labels: 1 for fake, 0 for true
     fake['labels'] = 1
@@ -105,3 +109,4 @@ st.subheader("📊 Model Performance")
 st.text(f"Accuracy: {acc * 100:.2f}%")
 with st.expander("See Classification Report"):
     st.text(report)
+
