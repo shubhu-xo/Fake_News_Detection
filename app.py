@@ -3,7 +3,6 @@ import pandas as pd
 import re
 import string
 import nltk
-import gdown
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -20,23 +19,17 @@ nltk.download('wordnet')
 nltk.download('omw-1.4')
 
 # new load_data function
+# Load and prepare the data
+# Using st.cache_data to cache the data and avoid reloading on every interaction
 @st.cache_data
 def load_data():
-    # Standard Google Drive sharing links
-    fake_url = "https://drive.google.com/file/d/19PMwfUtx-cvQRoEZmiLaRbIxb3wfmQNc/view?usp=sharing"
-    true_url = "https://drive.google.com/file/d/1zOdzPwD2ipm1YRDLlGUO0dykz7deyy6X/view?usp=sharing"
-
-    # Define the output filenames
-    fake_output = 'Fake.csv'
-    true_output = 'True.csv'
+    # Direct raw URLs from a public GitHub repository
+    fake_url = "https://raw.githubusercontent.com/jainamshah17/Fake-News-Detection/master/dataset/Fake.csv"
+    true_url = "https://raw.githubusercontent.com/jainamshah17/Fake-News-Detection/master/dataset/True.csv"
     
-    # Download the files from Google Drive
-    gdown.download(url=fake_url, output=fake_output, quiet=False)
-    gdown.download(url=true_url, output=true_output, quiet=False)
-    
-    # Reading the locally downloaded datasets
-    fake = pd.read_csv(fake_output)
-    true = pd.read_csv(true_output)
+    # Reading the datasets directly from the URLs
+    fake = pd.read_csv(fake_url)
+    true = pd.read_csv(true_url)
     
     # Assigning labels: 1 for fake, 0 for true
     fake['labels'] = 1
@@ -117,6 +110,7 @@ st.subheader("📊 Model Performance")
 st.text(f"Accuracy: {acc * 100:.2f}%")
 with st.expander("See Classification Report"):
     st.text(report)
+
 
 
 
