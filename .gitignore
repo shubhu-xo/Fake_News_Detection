@@ -1,5 +1,2 @@
-# Ignore dataset files
-*.csv
-
-# Ignore Python cache files
 __pycache__/
+

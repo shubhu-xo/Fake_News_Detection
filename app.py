@@ -18,13 +18,18 @@ nltk.download('stopwords')
 nltk.download('wordnet')
 nltk.download('omw-1.4')
 
+# new load_data function
 # Load and prepare the data
 # Using st.cache_data to cache the data and avoid reloading on every interaction
 @st.cache_data
 def load_data():
-    # Reading the datasets. These files must be in the same directory as the app.py file.
-    fake = pd.read_csv("Fake.csv")
-    true = pd.read_csv("True.csv")
+    # Direct raw URLs from a public GitHub repository
+    fake_url = "https://raw.githubusercontent.com/jainamshah17/Fake-News-Detection/master/dataset/Fake.csv"
+    true_url = "https://raw.githubusercontent.com/jainamshah17/Fake-News-Detection/master/dataset/True.csv"
+    
+    # Reading the datasets directly from the URLs
+    fake = pd.read_csv(fake_url)
+    true = pd.read_csv(true_url)
     
     # Assigning labels: 1 for fake, 0 for true
     fake['labels'] = 1
