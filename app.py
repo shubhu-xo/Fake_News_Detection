@@ -3,6 +3,7 @@ import pandas as pd
 import re
 import string
 import nltk
+import gdown
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -18,17 +19,29 @@ nltk.download('stopwords')
 nltk.download('wordnet')
 nltk.download('omw-1.4')
 
-# Load and prepare the data
-# Using st.cache_data to cache the data and avoid reloading on every interaction
+# Add this import at the top with your other imports
+import gdown
+
+# ... (your other imports) ...
+
+# Replace your old load_data function with this new one
 @st.cache_data
 def load_data():
-    # Direct download URLs from Google Drive
-    fake_url = "https://drive.google.com/uc?export=download&id=19PMwfUtx-cvQRoEZmiLaRbIxb3wfmQNc"
-    true_url = "https://drive.google.com/uc?export=download&id=1zOdzPwD2ipm1YRDLlGUO0dykz7deyy6XE"
+    # Standard Google Drive sharing links
+    fake_url = "https://drive.google.com/file/d/19PMwfUtx-cvQRoEZmiLaRbIxb3wfmQNc/view?usp=sharing"
+    true_url = "https://drive.google.com/file/d/1zOdzPwD2ipm1YRDLlGUO0dykz7deyy6X/view?usp=sharing"
+
+    # Define the output filenames
+    fake_output = 'Fake.csv'
+    true_output = 'True.csv'
     
-    # Reading the datasets from the URLs
-    fake = pd.read_csv(fake_url)
-    true = pd.read_csv(true_url)
+    # Download the files from Google Drive
+    gdown.download(url=fake_url, output=fake_output, quiet=False)
+    gdown.download(url=true_url, output=true_output, quiet=False)
+    
+    # Reading the locally downloaded datasets
+    fake = pd.read_csv(fake_output)
+    true = pd.read_csv(true_output)
     
     # Assigning labels: 1 for fake, 0 for true
     fake['labels'] = 1
@@ -109,4 +122,5 @@ st.subheader("📊 Model Performance")
 st.text(f"Accuracy: {acc * 100:.2f}%")
 with st.expander("See Classification Report"):
     st.text(report)
+
 
