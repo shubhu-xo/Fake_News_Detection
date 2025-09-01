@@ -19,12 +19,7 @@ nltk.download('stopwords')
 nltk.download('wordnet')
 nltk.download('omw-1.4')
 
-# Add this import at the top with your other imports
-import gdown
-
-# ... (your other imports) ...
-
-# Replace your old load_data function with this new one
+# new load_data function
 @st.cache_data
 def load_data():
     # Standard Google Drive sharing links
@@ -122,5 +117,6 @@ st.subheader("📊 Model Performance")
 st.text(f"Accuracy: {acc * 100:.2f}%")
 with st.expander("See Classification Report"):
     st.text(report)
+
 
 
